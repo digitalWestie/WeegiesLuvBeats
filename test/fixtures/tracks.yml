@@ -1,0 +1,27 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  album: MyString
+  genre: MyString
+  playlist: MyString
+  server_location: MyString
+  plays: 1
+  mood: 1
+  record_label: MyString
+  texture: 1
+  duration: MyString
+  artist: 
+
+two:
+  name: MyString
+  album: MyString
+  genre: MyString
+  playlist: MyString
+  server_location: MyString
+  plays: 1
+  mood: 1
+  record_label: MyString
+  texture: 1
+  duration: MyString
+  artist: 
