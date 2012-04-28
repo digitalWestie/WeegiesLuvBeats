@@ -1,7 +1,24 @@
-<h1>Hi! <%= @user.username %></h1>
-<%= image_tag @user.load_profile %>
+<h1>Hi! <%= @user.username %> <%= image_tag @user.load_profile %></h1>
+<h2>Check out your recommendations!</h2>
 
+<br/>
+
+<h3>Some of your last.fm top tags: <% for tag in @artists.collect {|a| a.top_tags }.flatten[0 .. 9] %> <%= tag.name %>  <% end %>
+</h3>
+
+
+<% i = 1 %>
 <% for artist in @artists %>
-  <%= artist.name %>
+
+  <div class = "span3" style = "border:1px solid silver; padding:10px;">
+    <%= content_tag :h3, link_to("#{i}. #{artist.name}", artist.url) %>
+    <%= image_tag artist.image('large'), :style => "float:left; margin:5px; margin-left:0px;" %>
+    <%= artist.summary.html_safe %>
+  </div>
+
+  <%= cycle("", "", "<hr/>").html_safe %>
+
+  <% i += 1%>
 <% end %>
+
 
