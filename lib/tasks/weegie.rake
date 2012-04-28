@@ -30,20 +30,39 @@ namespace :weegie do
   task :check_entries => :environment do |t, args|
     artists = Artist.all
     for artist in artists
-      if artist.has_entry.nil?
+
         artist.has_entry = true
         artist.has_entry = false if Rockstar::Artist.new(artist.name, :include_info => true).playcount.nil?
         artist.save
-      end
+
     end
 
     tracks = Track.all
     for track in tracks
-      if track.has_entry.nil?
+
         track.has_entry = true
         track.has_entry = false if Rockstar::Track.new(track.artist.name, track.name, :include_info => true).playcount.nil?
         track.save
-      end
+
+    end
+  end
+
+  desc "get tags"
+  task :get_tags => :environment do |t, args|
+    artists = Artist.all
+    for artist in artists
+      for tag in Rockstar::Artist.new(artist.name, :include_info => true).top_tags
+        t = artist.tags.build(:name => tag.name, :count => tag.count, :url => tag.url)
+        t.save
+      end  
+    end
+
+    tracks = Track.all
+    for track in tracks
+      for tag in Rockstar::Track.new(track.artist.name, track.name :include_info => true).tags
+        t = track.tags.build(:name => tag.name, :count => tag.count, :url => tag.url)
+        t.save
+      end  
     end
   end
 
