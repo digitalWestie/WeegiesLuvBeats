@@ -1,5 +1,12 @@
 .bundle
+.rvmrc
 db/*.sqlite3
 log/*.log
 tmp/
-.sass-cache/
+*.swp
+*.orig
+*.swo
+.redcar
+Gemfile.lock
+Rakefile
+.DS_Store

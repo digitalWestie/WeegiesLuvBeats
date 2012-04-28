@@ -49,20 +49,22 @@ namespace :weegie do
 
   desc "get tags"
   task :get_tags => :environment do |t, args|
-    artists = Artist.all
+    artists = Artist.have_data.all
     for artist in artists
       for tag in Rockstar::Artist.new(artist.name, :include_info => true).top_tags
-        t = artist.tags.build(:name => tag.name, :count => tag.count, :url => tag.url)
-        t.save
-      end  
+        t = Tag.find_or_create_by_name(tag.name, :url => tag.url)
+        at = AssociatedTag.new(:artist_id => artist.id, :tag_id => t.id, :count => tag.count)
+        at.save
+      end
     end
 
-    tracks = Track.all
+    tracks = Track.have_data.all
     for track in tracks
-      for tag in Rockstar::Track.new(track.artist.name, track.name :include_info => true).tags
-        t = track.tags.build(:name => tag.name, :count => tag.count, :url => tag.url)
-        t.save
-      end  
+      for tag in Rockstar::Track.new(track.artist.name, track.name, :include_info => true).tags
+        t = Tag.find_or_create_by_name(tag.name, :url => tag.url)
+        at = AssociatedTag.new(:track_id => track.id, :tag_id => t.id, :count => tag.count)
+        at.save
+      end
     end
   end
 

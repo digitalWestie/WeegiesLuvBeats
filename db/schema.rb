@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120428054816) do
+ActiveRecord::Schema.define(:version => 20120428070155) do
 
   create_table "artists", :force => true do |t|
     t.string   "name"
@@ -20,18 +20,24 @@ ActiveRecord::Schema.define(:version => 20120428054816) do
     t.boolean  "has_entry"
   end
 
-  create_table "tags", :force => true do |t|
-    t.string   "name"
-    t.integer  "count"
-    t.string   "url"
-    t.integer  "artist_id"
+  create_table "associated_tags", :force => true do |t|
     t.integer  "track_id"
+    t.integer  "artist_id"
+    t.integer  "tag_id"
+    t.integer  "count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "tags", ["artist_id"], :name => "index_tags_on_artist_id"
-  add_index "tags", ["track_id"], :name => "index_tags_on_track_id"
+  add_index "associated_tags", ["artist_id"], :name => "index_associated_tags_on_artist_id"
+  add_index "associated_tags", ["track_id"], :name => "index_associated_tags_on_track_id"
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "tracks", :force => true do |t|
     t.string   "name"

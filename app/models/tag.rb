@@ -1,4 +1,7 @@
 class Tag < ActiveRecord::Base
-  belongs_to :artist
-  belongs_to :track
+
+  has_many :associated_tags, :dependent => :destroy
+  has_many :tracks, :through => :associated_tags
+  has_many :artists, :through => :associated_tags
+
 end

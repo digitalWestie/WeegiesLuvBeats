@@ -1,6 +1,9 @@
 class Artist < ActiveRecord::Base
   
   has_many :tracks, :dependent => :destroy
+  has_many :associated_tags, :dependent => :destroy
+  has_many :tags, :through => :associated_tags
+  
   validates_presence_of :name
 
   def self.find_for_user(user, key)
