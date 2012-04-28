@@ -1,4 +1,13 @@
 WeegieBeats::Application.routes.draw do
+
+#Your API Key is 267346c6269500db6f77d00088cf4068
+#Your secret is 246cd98ffc2cf2e80efd02658df2804a
+
+  get 'lastfm/authorize' => 'lastfm_auth#login', :as => "lastfm_login"
+  get 'lastfm/callback' => 'lastfm_auth#callback'
+
+  root :to => 'home#index'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

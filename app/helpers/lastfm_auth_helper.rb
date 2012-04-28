@@ -1,0 +1,2 @@
+module LastfmAuthHelper
+end
