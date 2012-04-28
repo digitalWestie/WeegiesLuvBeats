@@ -1,3 +1,30 @@
-<%= image_tag 'rab.jpg' %>
+<div class = "row">
 
-<%= link_to 'Begin', lastfm_token_path, :class => 'btn btn-large'  %>
+  <div class = "span8">
+
+    <h1>Use <%= link_to 'Last.fm', "http://last.fm/" %> to Discover Glasgow artists you'll love!</h1> 
+    <h2>Glasgow is a UNESCO City of Music</h2>
+
+    <% for artist in @artists %>
+      <%= image_tag artist.image('large') %>
+    <% end %>
+  
+    <%= link_to 'Begin', lastfm_token_path, :class => 'btn btn-large'  %>
+
+    
+  </div>
+
+
+  <div class = "span4">
+
+    <%= image_tag 'rab.jpg' %>
+  
+    <p>750 Artists</p>
+    <p>3500 Tracks</p>
+    <p>10,000 > Last.fm tags</p>
+    
+  </div>
+
+</div>
+
+

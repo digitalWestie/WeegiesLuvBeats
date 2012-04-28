@@ -72,13 +72,15 @@ namespace :weegie do
     tracks = Track.have_data.all
 
     for track in tracks
-      puts "Track #{tracks.find_index(track)} of #{tracks.size}"
-      ts = Rockstar::Track.new(track.artist.name, track.name, :include_info => true).tags
-      unless track.tags.size.eql?(ts.size)
-        for tag in ts
-          unless tag.name.size > 254 or tag.url.size > 254
-            t = Tag.find_or_create_by_name(tag.name, :url => tag.url)
-            AssociatedTag.find_or_create_by_track_id_and_tag_id(track.id, t.id, :count => tag.count)
+      if track.tags.empty?
+        puts "Track #{tracks.find_index(track)} of #{tracks.size}"
+        ts = Rockstar::Track.new(track.artist.name, track.name, :include_info => true).tags
+        unless track.tags.size.eql?(ts.size)
+          for tag in ts
+            unless tag.name.size > 254 or tag.url.size > 254
+              t = Tag.find_or_create_by_name(tag.name, :url => tag.url)
+              AssociatedTag.find_or_create_by_track_id_and_tag_id(track.id, t.id, :count => tag.count)
+            end
           end
         end
       end
