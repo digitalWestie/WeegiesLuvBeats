@@ -1,5 +1,7 @@
 class Track < ActiveRecord::Base
-  
+
+  belongs_to :artist
+
   has_many :associated_tags, :dependent => :destroy
   has_many :tags, :through => :associated_tags
 
