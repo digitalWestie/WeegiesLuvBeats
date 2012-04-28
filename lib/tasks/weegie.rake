@@ -54,8 +54,8 @@ namespace :weegie do
     for artist in artists
       ts = Rockstar::Artist.new(artist.name, :include_info => true).top_tags
       unless artist.tags.size.eql?(ts.size)
+        puts "Adding #{ts.size} tags"
         for tag in ts
-          puts "Adding #{ts.size} tags"
           unless tag.name.size > 254
             t = Tag.find_or_create_by_name(tag.name, :url => tag.url)
             AssociatedTag.find_or_create_by_artist_id_and_tag_id(artist.id, t.id, :count => tag.count)
