@@ -37,15 +37,13 @@ class Artist < ActiveRecord::Base
   end
 
   def rank(rankings)
-    score = 0    
-    for at in self.associated_tags
+    score = 0
+    for at in self.associated_tags.joins(:tag).where("tags.name" => rankings.keys)
       tag_score = 0
-      unless rankings[at.tag.name].nil?
-        tag_score = rankings[at.tag.name] 
-        tag_score = tag_score * at.count
-        score += tag_score
-      end
-    end  
+      tag_score = rankings[at.tag.name] 
+      tag_score = tag_score * at.count
+      score += tag_score
+    end
     return score
   end
 
