@@ -4,7 +4,7 @@ WeegieBeats::Application.routes.draw do
 #Your secret is 246cd98ffc2cf2e80efd02658df2804a
 
   get 'lastfm/token' => 'lastfm_auth#get_token', :as => "lastfm_token"
-  get 'lastfm/authorize' => 'lastfm_auth#authorize'
+  #get 'lastfm/authorize' => 'lastfm_auth#authorize'
   get 'lastfm/callback' => 'lastfm_auth#callback'
 
   root :to => 'home#index'

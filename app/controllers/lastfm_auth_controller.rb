@@ -6,8 +6,10 @@ class LastfmAuthController < ApplicationController
 
   def callback
     if params[:token]    
-      redirect_to "http://ws.audioscrobbler.com/2.0/?method=auth.getsession&token=#{params[:token]}&api_key=267346c6269500db6f77d00088cf4068&api_sig=246cd98ffc2cf2e80efd02658df2804a"
-      #render :text => params[:token]       
+      Rockstar.lastfm = {:api_key => "267346c6269500db6f77d00088cf4068", :api_secret => "246cd98ffc2cf2e80efd02658df2804a"}
+      a = Rockstar::Auth.new
+      session = a.session(params[:token])
+      render :text => session
     else
       render :text => "Borked! Couldnae login!"
     end
