@@ -1,11 +1,15 @@
 WeegieBeats::Application.routes.draw do
 
+
+
 #Your API Key is 267346c6269500db6f77d00088cf4068
 #Your secret is 246cd98ffc2cf2e80efd02658df2804a
 
   get 'lastfm/token' => 'lastfm_auth#get_token', :as => "lastfm_token"
   #get 'lastfm/authorize' => 'lastfm_auth#authorize'
   get 'lastfm/callback' => 'lastfm_auth#callback'
+
+  get "dashboard/index" => "dashboard#index", :as => "dashboard"
 
   root :to => 'home#index'
 
