@@ -1,5 +1,7 @@
 <h1>Hi! <%= @user.username %></h1>
 <%= image_tag @user.load_profile %>
 
-<%= @artists.size %>
+<% for artist in @artists %>
+<%= artist.name %>
+<% end %>
 
