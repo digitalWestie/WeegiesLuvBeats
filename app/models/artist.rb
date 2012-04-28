@@ -27,27 +27,25 @@ class Artist < ActiveRecord::Base
     max = rank_arr.collect {|e| e[1] }.max #get highest tag count
     rank_arr.each {|e| e[1] = e[1].to_f/max }
     rank_arr.delete_if {|e| e[1] > tolerance } # keep crappy ones to get rid of
-    rank_arr.each {|e| ranking.delete(e[0]) }    
+    rank_arr.each {|e| ranking.delete(e[0]) }
 
     artists = Tag.find_all_by_name(ranking.keys).collect {|e| e.artists }.flatten
     artists.keep_if {|a| artists.count(a) > 2 }
     artists.uniq!
     artists.sort { |a,b| b.rank(ranking) <=> a.rank(ranking) }
-    #return [artists.collect { |b| b.rank(ranking) }, artists]
     return artists
   end
 
   def rank(rankings)
-    score = 0
-    for tag in self.tags
+    score = 0    
+    for at in self.associated_tags
       tag_score = 0
-      unless rankings[tag.name].nil?
-        tag_score = rankings[tag.name] 
-        tag_score = tag_score * tag.associated_tags.find_by_artist_id(self.id).count
+      unless rankings[at.tag.name].nil?
+        tag_score = rankings[at.tag.name] 
+        tag_score = tag_score * at.count
+        score += tag_score
       end
-      score += tag_score
-    end
-
+    end  
     return score
   end
 
