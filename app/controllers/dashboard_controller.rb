@@ -1,7 +1,7 @@
 class DashboardController < ApplicationController
 
   def index
-    @username = session[:username]    
+    @user = Rockstar::User.new(session[:username])     
   end
 
 end
