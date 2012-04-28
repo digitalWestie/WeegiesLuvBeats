@@ -9,10 +9,12 @@ class Artist < ActiveRecord::Base
   def self.find_for_user(user, key)
     lastfm_rec = user.recommended_artists(key)
     names = lastfm_rec.collect { |a| a.name }
-    return Artist.find_all_by_name(names)
-    #1 artists by lastfm recommendations
+    artists = Artist.find_all_by_name(names)
 
-    #2 artists by tags
+    fm_tags = user.top_tags.collect { |t| t.name }
+    tags = Tag.find_all_by_name(fm_tags)
+    artists.concat(tags.collect { |t| t.artists }.flatten)
+    return artists
   end
 
 	scope :have_data, where(:has_entry => true)

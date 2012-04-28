@@ -47,8 +47,8 @@ namespace :weegie do
     end
   end
 
-  desc "get tags"
-  task :get_tags => :environment do |t, args|
+  desc "get artist tags"
+  task :get_artist_tags => :environment do |t, args|
 
     artists = Artist.have_data.all
     for artist in artists
@@ -64,12 +64,17 @@ namespace :weegie do
       end
     end
 
+  end
+
+  desc "get track tags"
+  task :get_track_tags => :environment do |t, args|
+
     tracks = Track.have_data.all
 
     for track in tracks
+      puts "Track #{tracks.find_index(track)} of #{tracks.size}"
       ts = Rockstar::Track.new(track.artist.name, track.name, :include_info => true).tags
       unless track.tags.size.eql?(ts.size)
-        puts "Adding #{ts.size} tags"
         for tag in ts
           unless tag.name.size > 254 or tag.url.size > 254
             t = Tag.find_or_create_by_name(tag.name, :url => tag.url)
@@ -78,7 +83,7 @@ namespace :weegie do
         end
       end
     end
+
   end
 
 end
-
