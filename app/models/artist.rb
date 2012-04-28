@@ -7,6 +7,9 @@ class Artist < ActiveRecord::Base
     lastfm_rec = user.recommended_artists(key)
     names = lastfm_rec.collect { |a| a.name }
     return Artist.find_all_by_name(names)
+    #1 artists by lastfm recommendations
+
+    #2 artists by tags
   end
   
 end
