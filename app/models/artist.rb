@@ -29,7 +29,7 @@ class Artist < ActiveRecord::Base
     rank_arr.delete_if {|e| e[1] > tolerance } # keep crappy ones to get rid of
     rank_arr.each {|e| ranking.delete(e[0]) }
 
-    artists = Tag.find_all_by_name(ranking.keys).collect {|e| e.artists }.flatten
+    artists = Artist.joins(:tag).where('tags.name' => ranking.keys).all
     artists.keep_if {|a| artists.count(a) > 2 }
     artists.uniq!
     artists.sort { |a,b| b.rank(ranking) <=> a.rank(ranking) }
