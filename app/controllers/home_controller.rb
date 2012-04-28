@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     @artists = []
 
     i = 0
-    until @artists.size > 12
+    until @artists.size > 13
       a = Rockstar::Artist.new(artists[i].name, :include_info => true)
       @artists << a unless a.image('large').blank?
       i+=1
