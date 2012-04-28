@@ -1,6 +1,6 @@
 class LastfmAuthController < ApplicationController
 
-  def request
+  def authorize
     redirect_to 'http://www.last.fm/api/auth/?api_key=267346c6269500db6f77d00088cf4068'
   end
 
