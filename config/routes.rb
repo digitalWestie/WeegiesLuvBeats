@@ -11,6 +11,8 @@ WeegieBeats::Application.routes.draw do
 
   get "dashboard/index" => "dashboard#index", :as => "dashboard"
 
+  get 'about' => "home#about"
+
   root :to => 'home#index'
 
   # The priority is based upon order of creation:
