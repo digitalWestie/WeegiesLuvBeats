@@ -11,13 +11,27 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120427231037) do
+ActiveRecord::Schema.define(:version => 20120428054816) do
 
   create_table "artists", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "has_entry"
   end
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.integer  "count"
+    t.string   "url"
+    t.integer  "artist_id"
+    t.integer  "track_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tags", ["artist_id"], :name => "index_tags_on_artist_id"
+  add_index "tags", ["track_id"], :name => "index_tags_on_track_id"
 
   create_table "tracks", :force => true do |t|
     t.string   "name"
@@ -33,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20120427231037) do
     t.integer  "artist_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "has_entry"
   end
 
   add_index "tracks", ["artist_id"], :name => "index_tracks_on_artist_id"

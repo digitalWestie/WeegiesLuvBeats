@@ -11,5 +11,7 @@ class Artist < ActiveRecord::Base
 
     #2 artists by tags
   end
+
+	scope :have_data, where(:has_entry => true)
   
 end

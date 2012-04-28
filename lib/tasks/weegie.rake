@@ -22,66 +22,30 @@ namespace :weegie do
         :record_label => Iconv.iconv('utf-8', 'iso8859-1', track[8]).first,
         :texture => Iconv.iconv('utf-8', 'iso8859-1', track[9]).first,
         :duration => Iconv.iconv('utf-8', 'iso8859-1', track[10]).first)
-    end    
-
-
-=begin
-    artist_index = tracks.first.index 'artist'
-    track_index = tracks.first.index 'track'
-    album_index = tracks.first.index 'album'
-    genre_index = tracks.first.index 'genre'
-    playlist_index = tracks.first.index 'playlist'
-    server_location_index = tracks.first.index 'server_location'
-    plays_index = tracks.first.index 'plays'
-    mood_index = tracks.first.index 'mood'
-    record_label_index = tracks.first.index 'record_label'
-    texture_index = tracks.first.index 'texture'
-    length_index = tracks.first.index 'length'
-
-    tracks.delete_at(0) # get rid of format row in array
-    #artists = tracks.collect { |t| t[artist_index] }
-    #artists.each { |a| Artist.find_or_create_by_name(a) }
-
-    for track in tracks
-
-      artist_name   = ""
-      track         = ""
-      album         = ""
-      genre         = ""
-      playlist      = ""
-      server_location = ""
-      plays         = ""
-      mood          = ""
-      record_label  = ""
-      texture       = ""
-      length        = ""
-
-      artist_name   = track[artist_index] unless track[artist_index].nil?
-      track         = track[track_index] unless track[track_index].nil?
-      album         = track[album_index] unless track[track_index].nil?
-      genre         = track[genre_index] unless track[genre_index].nil?
-      playlist      = track[playlist_index] unless track[playlist_index].nil?
-      server_location = track[server_location_index] unless track[server_location_index].nil?
-      plays         = track[plays_index] unless track[plays_index].nil?
-      mood          = track[mood_index] unless track[mood_index].nil?
-      record_label  = track[record_label_index] unless track[record_label_index].nil?
-      texture       = track[texture_index] unless track[texture_index].nil?
-      length        = track[length_index] unless track[length_index].nil?
-
-      artist = Artist.find_or_create_by_name(artist_name)
-      Track.find_or_create_by_name(track, :artist_id => artist.id, 
-        :album => album,
-        :genre => genre,
-        :playlist => playlist,
-        :server_location => server_location,
-        :plays => plays,
-        :mood => mood,
-        :record_label => record_label,
-        :texture => texture,
-        :duration => length)
     end
-=end
 
   end
+
+  desc "Set has_entry variable"
+  task :check_entries => :environment do |t, args|
+    artists = Artist.all
+    for artist in artists
+      if artist.has_entry.nil?
+        artist.has_entry = true
+        artist.has_entry = false if Rockstar::Artist.new(artist.name, :include_info => true).playcount.nil?
+        artist.save
+      end
+    end
+
+    tracks = Track.all
+    for track in tracks
+      if track.has_entry.nil?
+        track.has_entry = true
+        track.has_entry = false if Rockstar::Track.new(track.artist.name, track.name, :include_info => true).playcount.nil?
+        track.save
+      end
+    end
+  end
+
 end
 
