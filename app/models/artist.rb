@@ -4,7 +4,7 @@ class Artist < ActiveRecord::Base
   validates_presence_of :name
 
   def self.find_for_user(user, key)
-    lastfm_rec = user.recommend_artists(key)
+    lastfm_rec = user.recommended_artists(key)
     names = lastfm_rec.collect { |a| a.name }
     return Artist.find_all_by_name(names)
   end
