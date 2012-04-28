@@ -49,25 +49,33 @@ namespace :weegie do
 
   desc "get tags"
   task :get_tags => :environment do |t, args|
+
     artists = Artist.have_data.all
     for artist in artists
       ts = Rockstar::Artist.new(artist.name, :include_info => true).top_tags
-      break if artist.tags.size.eql?(ts.size)
-      for tag in ts
-        break if tag.name.size > 254
-        t = Tag.find_or_create_by_name(tag.name, :url => tag.url)
-        AssociatedTag.find_or_create_by_artist_id_and_tag_id(artist.id, t.id, :count => tag.count)
+      unless artist.tags.size.eql?(ts.size)
+        for tag in ts
+          puts "Adding #{ts.size} tags"
+          unless tag.name.size > 254
+            t = Tag.find_or_create_by_name(tag.name, :url => tag.url)
+            AssociatedTag.find_or_create_by_artist_id_and_tag_id(artist.id, t.id, :count => tag.count)
+          end
+        end
       end
     end
 
     tracks = Track.have_data.all
+
     for track in tracks
       ts = Rockstar::Track.new(track.artist.name, track.name, :include_info => true).tags
-      break if track.tags.size.eql?(ts.size)
-      for tag in ts
-        break if tag.name.size > 254
-        t = Tag.find_or_create_by_name(tag.name, :url => tag.url)
-        AssociatedTag.find_or_create_by_track_id_and_tag_id(track.id, t.id, :count => tag.count)
+      unless track.tags.size.eql?(ts.size)
+        puts "Adding #{ts.size} tags"
+        for tag in ts
+          unless tag.name.size > 254
+            t = Tag.find_or_create_by_name(tag.name, :url => tag.url)
+            AssociatedTag.find_or_create_by_track_id_and_tag_id(track.id, t.id, :count => tag.count)
+          end
+        end
       end
     end
   end
