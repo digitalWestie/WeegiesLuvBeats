@@ -4,7 +4,7 @@ class DashboardController < ApplicationController
     @user = Rockstar::User.new(session[:username])
     
     tags = []
-    @user.top_artists[0 .. 24].each {|artist| tags.concat(artist.top_tags[0 .. 4]) }
+    @user.top_artists[0 .. 23].each {|artist| tags.concat(artist.top_tags[0 .. 4]) }
     
     @rankings = {}
 
