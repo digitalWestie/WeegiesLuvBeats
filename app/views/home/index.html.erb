@@ -3,7 +3,7 @@
   <div class = "span8">
 
     <h1>Use <%= link_to 'Last.fm', "http://last.fm/" %> to Discover Glasgow artists you'll love!</h1> 
-    <h2>Glasgow is a UNESCO City of Music</h2>
+    <h2>Glasgow, UNESCO City of Music</h2>
 
     <% for artist in @artists %>
       <%= image_tag artist.image('large') %>
@@ -13,13 +13,13 @@
     
   </div>
 
-  <div class = "span4">
+  <div class = "span4" id = "big">
 
     <%= image_tag 'rab.jpg' %>
   
-    <p class = "bold">748 Artists w/ Last.fm data</p>
-    <p class = "bold">3254 Tracks w/ Last.fm data</p>
-    <p class = "bold">10,809 Last.fm tags</p>
+    <p style = "font-size: 1.9em; font-weight:bold; margin: 1em 0em;">748 Artists w/ Last.fm data</p>
+    <p style = "font-size: 1.9em; font-weight:bold; margin: 1em 0em;">3254 Tracks w/ Last.fm data</p>
+    <p style = "font-size: 1.9em; font-weight:bold; margin: 1em 0em;">10,809 Last.fm tags</p>
     
   </div>
 

@@ -1,19 +1,20 @@
 <h1>Hi! <%= @user.username %> <%= image_tag @user.load_profile %></h1>
-<h2>Check out your recommendations!</h2>
+<h2>We're going to find some artists for you!</h2>
+<p>Not <%= @user.username %>? Click <%= link_to 'here', logout_path %> (you may also have to log out of Last.fm) </h3>
 
 <br/>
+<br/>
 
-<h3>Some of your last.fm top tags: <% for tag in @artists.collect {|a| a.top_tags }.flatten[0 .. 9] %> <%= tag.name %>  <% end %>
-</h3>
-
+<%= form_tag rank_path, :method => 'get' do %>
 
 <% i = 1 %>
-<% for artist in @artists %>
+<% @rankings.each do |rank| %>
 
-  <div class = "span3" style = "border:1px solid silver; padding:10px;">
-    <%= content_tag :h3, link_to("#{i}. #{artist.name}", artist.url) %>
-    <%= image_tag artist.image('large'), :style => "float:left; margin:5px; margin-left:0px;" %>
-    <%= artist.summary.html_safe %>
+  <div class = "span3 tag_box" style = "">
+    <%= content_tag :h3, "#{i}. #{rank[0]}" %>
+    <%= hidden_field_tag "rankings[#{rank[0]}]", rank[1] %>
+    <%#= image_tag artist.image('large'), :style => "float:left; margin:5px; margin-left:0px;" %>
+    <%#= artist.summary.html_safe %>
   </div>
 
   <%= cycle("", "", "<hr/>").html_safe %>
@@ -21,4 +22,6 @@
   <% i += 1%>
 <% end %>
 
+<%= submit_tag 'Continue', :class => 'btn btn-primary btn-large', :style => "" %>
 
+<% end %>

@@ -7,3 +7,7 @@
 */
 
 hr { border-bottom: 1em; }
+div.artist_box { height: 357px;
+margin-bottom: 10px; overflow:hidden; border:1px solid silver; padding:10px; }
+
+div#big p { font-size: 1.9em; font-weight:bold; margin: 1em 0em;}

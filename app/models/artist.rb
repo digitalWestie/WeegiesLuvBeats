@@ -12,27 +12,11 @@ class Artist < ActiveRecord::Base
     artists = Artist.find_all_by_name(names)
   end
 
-  def self.rank_by_top_tags(user, tolerance=0.25)
-    #fm_tags = user.top_tags.collect { |t| t.name }
-    #tags = Tag.find_all_by_name(fm_tags)
-    #artists = tags.collect { |t| t.artists }.flatten
-    #return artists
-    tags = []
-    user.top_artists.each {|artist| tags.concat(artist.top_tags[0 .. 4]) }
-    ranking = {}
-    tags.uniq.each { |tag| ranking.merge!({tag.name => 0}) }
-    tags.each { |tag| ranking[tag.name] += tag.count.to_i }
-
-    rank_arr = ranking.to_a
-    max = rank_arr.collect {|e| e[1] }.max #get highest tag count
-    rank_arr.each {|e| e[1] = e[1].to_f/max }
-    rank_arr.delete_if {|e| e[1] > tolerance } # keep crappy ones to get rid of
-    rank_arr.each {|e| ranking.delete(e[0]) }
-
+  def self.rank_by_top_tags(ranking)
     artists = Artist.joins(:tags).where('tags.name' => ranking.keys).all
     artists.keep_if {|a| artists.count(a) > 2 }
     artists.uniq!
-    artists.sort { |a,b| b.rank(ranking) <=> a.rank(ranking) }
+    artists.sort! { |a,b| b.rank(ranking) <=> a.rank(ranking) }
     return artists
   end
 
@@ -40,7 +24,7 @@ class Artist < ActiveRecord::Base
     score = 0
     for at in self.associated_tags.joins(:tag).where("tags.name" => rankings.keys)
       tag_score = 0
-      tag_score = rankings[at.tag.name] 
+      tag_score = rankings[at.tag.name].to_i
       tag_score = tag_score * at.count
       score += tag_score
     end

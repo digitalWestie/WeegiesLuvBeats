@@ -3,6 +3,13 @@
  * and any sub-directories. You're free to add application-wide styles to this file and they'll appear at
  * the top of the compiled file, but it's generally better to create a new file per style scope.
 */
+
+
+hr { border-bottom: 1em; }
+div.artist_box { height: 357px;
+margin-bottom: 10px; overflow:hidden; border:1px solid silver; padding:10px; }
+
+div#big p { font-size: 1.9em; font-weight:bold; margin: 1em 0em;}
 /*!
  * Bootstrap v2.0.2
  *
