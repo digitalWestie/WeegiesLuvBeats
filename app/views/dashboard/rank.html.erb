@@ -1,9 +1,12 @@
 <h1>Hi! <%= @user.username %> <%= image_tag @user.load_profile %></h1>
+<a href="https://twitter.com/share" style = "float:right;" class="twitter-share-button" data-url="http://weegiesluvbeats.herokuapp.com/" data-text="Find great Glasgow artists with Last.FM and 'Weegies Luv Beats'" data-via="digitalWestie" data-size="large" data-hashtags="chscot">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
 <h2>Check out your recommendations!</h2>
 
 <br/>
 
-<h3>Some of the top tags for below: <% for tag in @artists.collect {|a| a.top_tags }.flatten[0 .. 9] %> <%= tag.name %>  <% end %>
+<h3>Some of the top tags for below: <% for tag in @artists.collect {|a| a.top_tags }.flatten[0 .. 9] %> <%= tag.name %>,  <% end %>
 </h3>
 <br/>
 <% i = 1 %>
