@@ -25,7 +25,7 @@ class DashboardController < ApplicationController
     @user = Rockstar::User.new(session[:username])
     artists = Artist.rank_by_top_tags(params[:rankings])
     @artists = []
-    for a in artists
+    for a in artists[0 .. 9]
       a = Rockstar::Artist.new(a.name, :include_info => true)
       @artists << a
     end
