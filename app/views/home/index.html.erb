@@ -4,7 +4,7 @@
 
     <h1>Use <%= link_to 'Last.fm', "http://last.fm/" %> to Discover Glasgow artists you'll love!</h1> 
     <h2>Glasgow, UNESCO City of Music</h2>
-
+    <br/>
     <% for artist in @artists %>
       <%= link_to image_tag(artist.image('large'), :alt => artist.name), artist.url %>
     <% end %>
