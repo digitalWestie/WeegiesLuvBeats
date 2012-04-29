@@ -6,7 +6,7 @@
     <h2>Glasgow, UNESCO City of Music</h2>
 
     <% for artist in @artists %>
-      <%= image_tag artist.image('large') %>
+      <%= link_to image_tag(artist.image('large'), :alt => artist.name), artist.url %>
     <% end %>
   
     <%= link_to 'Begin', lastfm_token_path, :class => 'btn btn-primary btn-large', :style => "font-size: 1.7em; padding: 20px; margin: 12px;"  %>
