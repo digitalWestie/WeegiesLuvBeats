@@ -1,10 +1,12 @@
 <h1>Hi! <%= @user.username %> <%= image_tag @user.load_profile %></h1>
-<h2>We're going to find some artists for you!</h2>
+<h2>We're going to filter through over 700 artists to find some you might like! </h2>
 <p>Not <%= @user.username %>? Click <%= link_to 'here', logout_path %> (you may also have to log out of Last.fm) </h3>
 
 <br/>
 <br/>
 
+<h3>Last.fm says you like: </h3>
+<br/>
 <%= form_tag rank_path, :method => 'get' do %>
 
 <% i = 1 %>
@@ -22,6 +24,8 @@
   <% i += 1%>
 <% end %>
 
+<hr/>
 <%= submit_tag 'Continue', :class => 'btn btn-primary btn-large', :style => "" %>
+<p style = "margin-top:1em;">We're about to do a lot of number crunching. It may take about 10 - 20 seconds so hold tight!</p>
 
 <% end %>
